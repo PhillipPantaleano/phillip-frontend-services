@@ -1,0 +1,40 @@
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: transparent;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 5rem;
+    }
+
+    &__name {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: 0.1em;
+        color: #e0e0ff;
+        text-transform: uppercase;
+    }
+
+    &__links {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+
+        a:hover {
+            color: #00ffff; /* Cyan glow */
+            text-shadow: 0 0 20px #fff, 0 0 20px #bf00ff, 0 0 30px #bf00ff, 0 0 40px #ff00ff;
+            cursor: pointer;
+        }
+
+        
+    }
+}

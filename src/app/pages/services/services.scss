@@ -1,0 +1,59 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Critical: stops animation from expanding page */
+    background: radial-gradient(ellipse at bottom, #1b0505 0%, #050000 100%);
+  }
+
+  .shooting-star {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #fff, 0 0 30px #ff3300, 0 0 60px #cc0000;
+    /* Start off-screen right */
+    right: -50px; 
+    animation: shoot 3s linear infinite;
+  }
+
+  .shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 4px; /* Trail behind (to the right) */
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(to right, #fff, #ffcc00, #ff3300, transparent);
+    transform: translateY(-50%);
+    filter: blur(1px);
+  }
+
+  @keyframes shoot {
+    0% {
+      transform: rotate(-45deg) translateX(0);
+      opacity: 1;
+    }
+    100% {
+      /* Move far to the left (off-screen) */
+      transform: rotate(-45deg) translateX(-150vw);
+      opacity: 0;
+    }
+  }
+
+  /* 2. Distribute stars across the ENTIRE page with random delays */
+  .star-1  { top: -10%; left: 10%; animation-delay: 0s; animation-duration: 2.5s; }
+  .star-2  { top: -10%; left: 25%; animation-delay: 1.2s; animation-duration: 3s; }
+  .star-3  { top: -10%; left: 40%; animation-delay: 0.5s; animation-duration: 2.8s; }
+  .star-4  { top: -10%; left: 55%; animation-delay: 2.1s; animation-duration: 3.5s; }
+  .star-5  { top: -10%; left: 70%; animation-delay: 0.8s; animation-duration: 2.2s; }
+  .star-6  { top: -10%; left: 85%; animation-delay: 1.5s; animation-duration: 3.1s; }
+
+  .star-7  { right: -10%; top: 20%; animation-delay: 2.5s; animation-duration: 2.9s; }
+  .star-8  { right: -10%; top: 30%; animation-delay: 0.3s; animation-duration: 3.3s; }
+  .star-9  { right: -10%; top: 40%; animation-delay: 1.8s; animation-duration: 2.6s; }
+  .star-10 { right: -10%; top: 50%; animation-delay: 0.9s; animation-duration: 3.2s; }
+  .star-11 { right: -10%; top: 60%;  animation-delay: 1.1s; animation-duration: 2.7s; }
+  .star-12 { right: -10%; top: 70%; animation-delay: 2.2s; animation-duration: 3.4s; }

@@ -1,0 +1,73 @@
+<div id="contact" class="min-h-screen bg-[#05050f] pt-24 pb-20">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h1 class="text-6xl font-bold tracking-tight mb-6">Let's Connect</h1>
+      <p class="text-xl text-gray-400">Have a project in mind? I'm currently available for new opportunities.</p>
+    </div>
+
+    <div class="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-12">
+      <form id="contact-form" class="space-y-8" (submit)="onSubmit($event)">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" id="name" name="name" required autocomplete="name">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" id="email" name="email" required autocomplete="email">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Subject</mat-label>
+            <input matInput type="text" id="subject" name="subject" required autocomplete="off">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Preferred Contact Method</mat-label>
+            <mat-select id="contactMethod" name="contactMethod" (selectionChange)="onContactMethodChange($event)">
+              <mat-option value="email">Email</mat-option>
+              <mat-option value="phone">Phone</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div id="phoneField" class="hidden">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              inputmode="numeric"
+              maxlength="14"
+              placeholder="(555) 123-4567"
+              (input)="formatPhoneNumber($event)"
+            >
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Message</mat-label>
+            <textarea matInput id="message" name="message" rows="6" required></textarea>
+          </mat-form-field>
+        </div>
+
+        <button mat-flat-button color="primary" type="submit" class="w-full py-5 rounded-2xl text-lg font-semibold">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

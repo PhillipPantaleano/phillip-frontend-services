@@ -1,0 +1,17 @@
+.typing {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.12em;
+  height: 1.05em;
+  background: currentColor;
+  animation: blinkCursor 0.8s step-end infinite;
+}
+
+@keyframes blinkCursor {
+  50% { opacity: 0; }
+}
