@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   standalone: true,
@@ -11,7 +10,7 @@ import { RouterLink } from '@angular/router';
 export class Home implements OnInit, OnDestroy {
   readonly typedText = signal('');
 
-  private readonly words = ['Frontend Developer', 'Freelancer'];
+  private readonly words = ['Frontend Developer', 'Freelancer', 'AI Architect'];
   private wordIndex = 0;
   private isDeleting = false;
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
