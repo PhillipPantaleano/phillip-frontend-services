@@ -1,82 +1,102 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { Component } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import emailjs from '@emailjs/browser';
-import { environment } from '../../../environments/environments';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
   imports: [
-    FormsModule,
-    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatButtonModule,
+    MatOptionModule
   ],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })
-export class Contact implements OnInit {
-  ngOnInit() {
-    emailjs.init(environment.emailjs.publicKey);
-  }
+export class Contact {
+  formSubmitted = false;
+  isSubmitting = false;
+  errorMessage: string | null = null;
 
   onContactMethodChange(event: any) {
-    const selectedValue = event?.value ?? event?.target?.value;
     const phoneField = document.getElementById('phoneField');
-
-    if (selectedValue === 'phone') {
+    if (event.value === 'phone') {
       phoneField?.classList.remove('hidden');
     } else {
       phoneField?.classList.add('hidden');
     }
   }
 
-  formatPhoneNumber(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const digits = input.value.replace(/\D/g, '').slice(0, 10);
+  formatPhoneNumber(event: any) {
+    let input = event.target.value.replace(/\D/g, '');
 
-    if (digits.length <= 3) {
-      input.value = digits;
-      return;
+    if (input.length > 0) {
+      if (input.length <= 3) {
+        input = `(${input}`;
+      } else if (input.length <= 6) {
+        input = `(${input.slice(0, 3)}) ${input.slice(3)}`;
+      } else {
+        input = `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6, 10)}`;
+      }
     }
 
-    if (digits.length <= 6) {
-      input.value = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-      return;
-    }
-
-    input.value = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    event.target.value = input;
   }
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
+    this.isSubmitting = true;
+    this.errorMessage = null;
 
     const form = event.target as HTMLFormElement;
-    const submitBtn = form.querySelector('button') as HTMLButtonElement;
-    const originalText = submitBtn.textContent;
+    const formData = new FormData(form);
 
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-
-    emailjs
-      .sendForm(environment.emailjs.serviceId, environment.emailjs.templateId, form)
-      .then((result) => {
-        console.log('Success:', result.text);
-        alert('✅ Message sent successfully!');
-        form.reset();
-      })
-      .catch((error) => {
-        console.error('EmailJS Error:', error);
-        alert('❌ Failed to send message. Check console for details.');
-      })
-      .finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
+    try {
+      const response = await fetch('https://formspree.io/f/mpqvoblj', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
+
+      if (response.ok) {
+        this.formSubmitted = true;
+        form.reset();
+        document.getElementById('phoneField')?.classList.add('hidden');
+      } else {
+        const errorData = await response.json().catch(() => null);
+        console.error('Formspree Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorData
+        });
+
+        if (response.status === 403) {
+          this.errorMessage = 'Unable to send message right now. Please try again in a moment or email me directly.';
+        } else if (response.status === 429) {
+          this.errorMessage = 'Too many attempts. Please wait a minute and try again.';
+        } else if (response.status >= 500) {
+          this.errorMessage = 'Server error. Please try again later.';
+        } else {
+          this.errorMessage = 'Something went wrong. Please try again.';
+        }
+      }
+    } catch (error) {
+      console.error('Network or unexpected error:', error);
+      this.errorMessage = 'Network error. Please check your connection and try again.';
+    } finally {
+      this.isSubmitting = false;
+    }
+  }
+
+  resetForm() {
+    this.formSubmitted = false;
+    this.errorMessage = null;
   }
 }
