@@ -138,3 +138,21 @@ select:-webkit-autofill:active {
   color: #fff !important;
   caret-color: #fff !important;
 }
+
+button,
+[type="button"],
+[type="submit"],
+[type="reset"],
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-outlined-button {
+  cursor: pointer;
+}
+
+/* Optional: show not-allowed cursor when disabled */
+button:disabled,
+[type="button"]:disabled,
+[type="submit"]:disabled {
+  cursor: not-allowed;
+}

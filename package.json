@@ -22,7 +22,6 @@
     "@angular/platform-server": "^22.0.0",
     "@angular/router": "^22.0.0",
     "@angular/ssr": "^22.0.4",
-    "@emailjs/browser": "^4.4.1",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/orbitron": "^5.2.8",
     "@fontsource/space-grotesk": "^5.2.10",
