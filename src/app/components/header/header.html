@@ -5,9 +5,18 @@
     </div>
 
     <div class="app-header__links">
-      <a routerLink="/">Home</a>
-      <a routerLink="/services">Services</a>
-      <a routerLink="/portfolio">Portfolio</a>
+      <a routerLink="/">
+        <mat-icon aria-hidden="true" aria-label="home" fontIcon="home"></mat-icon>
+        Home
+      </a>
+      <a routerLink="/services">
+        <mat-icon class="material-symbols-outlined" aria-hidden="true" aria-label="services" fontIcon="hand_meal"></mat-icon>
+        Services
+      </a>
+      <a routerLink="/portfolio">
+        <mat-icon aria-hidden="true" aria-label="portfolio" fontIcon="art_track"></mat-icon>
+        Portfolio
+      </a>
       <button class="px-4 py-2 bg-blue-900 hover:bg-blue-900/80 rounded-2xl transition-all text-base" type="button" routerLink="/contact">Get In Touch</button>
     </div>
   </div>
