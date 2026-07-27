@@ -12,6 +12,21 @@
   animation: blinkCursor 0.8s step-end infinite;
 }
 
+.planet {
+  bottom: 10px;
+}
+
 @keyframes blinkCursor {
   50% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    justify-content: start;
+    padding-top: 2rem;
+
+    .planet {
+      display: none;
+    }
+  }
 }
